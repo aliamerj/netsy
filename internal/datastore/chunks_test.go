@@ -47,6 +47,15 @@ func (m *mockStorage) Delete(ctx context.Context, key string) error {
 	return nil
 }
 
+func (m *mockStorage) DeleteBatch(ctx context.Context, keys []string) ([]string, error) {
+	for _, key := range keys {
+		if err := m.Delete(ctx, key); err != nil {
+			return nil, err
+		}
+	}
+	return nil, nil
+}
+
 func (m *mockStorage) List(ctx context.Context, prefix string) ([]storage.ObjectInfo, error) {
 	if m.listErr != nil {
 		return nil, m.listErr

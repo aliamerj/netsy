@@ -226,6 +226,11 @@ func (p *gcsProvider) Delete(ctx context.Context, key string) error {
 	return nil
 }
 
+// DeleteBatch has no native bulk API here, so it falls back to Delete.
+func (p *gcsProvider) DeleteBatch(ctx context.Context, keys []string) ([]string, error) {
+	return DeleteSequentially(ctx, p, keys)
+}
+
 // List returns all object keys matching the given prefix
 func (p *gcsProvider) List(ctx context.Context, prefix string) ([]ObjectInfo, error) {
 	var objects []ObjectInfo

@@ -54,6 +54,9 @@ type SnapshotConfig struct {
 	ThresholdRecords    int64 `json:"threshold_records"`     // default 10000
 	ThresholdSizeMB     int64 `json:"threshold_size_mb"`     // default 10000
 	ThresholdAgeMinutes int64 `json:"threshold_age_minutes"` // default 0
+
+	CleanupBatchSize     int      `json:"cleanup_batch_size"`     // default 250
+	CleanupBatchInterval Duration `json:"cleanup_batch_interval"` // default "1s"
 }
 
 // LoadClusterConfig reads a JSONC config file, converts it to JSON, and unmarshals it.
@@ -101,6 +104,12 @@ func LoadClusterConfig(path string) (ClusterConfig, error) {
 	}
 	if cc.Snapshot.ThresholdSizeMB == 0 {
 		cc.Snapshot.ThresholdSizeMB = 10000
+	}
+	if cc.Snapshot.CleanupBatchSize == 0 {
+		cc.Snapshot.CleanupBatchSize = 250
+	}
+	if cc.Snapshot.CleanupBatchInterval.Duration == 0 {
+		cc.Snapshot.CleanupBatchInterval.Duration = time.Second
 	}
 
 	return cc, nil

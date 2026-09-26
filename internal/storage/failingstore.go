@@ -105,6 +105,11 @@ func (f *FailingStore) Delete(ctx context.Context, key string) error {
 	return f.inner.Delete(ctx, key)
 }
 
+// DeleteBatch delegates to the inner store.
+func (f *FailingStore) DeleteBatch(ctx context.Context, keys []string) ([]string, error) {
+	return f.inner.DeleteBatch(ctx, keys)
+}
+
 // List delegates to the inner store.
 func (f *FailingStore) List(ctx context.Context, prefix string) ([]ObjectInfo, error) {
 	return f.inner.List(ctx, prefix)

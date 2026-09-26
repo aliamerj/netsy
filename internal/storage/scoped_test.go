@@ -122,3 +122,7 @@ func (e *errorStorage) Delete(_ context.Context, _ string) error {
 func (e *errorStorage) List(_ context.Context, _ string) ([]ObjectInfo, error) {
 	return nil, fmt.Errorf("list error")
 }
+
+func (e *errorStorage) DeleteBatch(_ context.Context, _ []string) ([]string, error) {
+	return nil, fmt.Errorf("delete batch error")
+}
